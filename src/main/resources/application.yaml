@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medical_facility_information_system?currentSchema=medical_facility_information_system_schema
+    username: postgres
+    password: ppp
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true  # Enable Flyway migration on startup
+    locations: classpath:db/migration  # Path to your migration scripts
+    baseline-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+
