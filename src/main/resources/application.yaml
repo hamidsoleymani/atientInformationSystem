@@ -1,14 +1,30 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/medical_facility_information_system?currentSchema=medical_facility_information_system_schema
+    url: jdbc:postgresql://localhost:5432/medical_facility_information_system
     username: postgres
     password: ppp
     driver-class-name: org.postgresql.Driver
+    hikari:
+      schema: medical_facility_information_system_schema
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
   flyway:
     enabled: true  # Enable Flyway migration on startup
     locations: classpath:db/migration  # Path to your migration scripts
     baseline-on-migrate: true
+    validate-on-migrate: false
+    clean-disabled: false
+
   jpa:
-    hibernate:
+   database-platform: org.hibernate.dialect.PostgreSQLDialect
+   hibernate:
       ddl-auto: none
+   show-sql: false
+   properties:
+      hibernate:
+        format_sql: true
+
 
