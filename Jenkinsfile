@@ -13,23 +13,22 @@ pipeline {
                 git branch: 'develop', url: 'https://github.com/hamidsoleymani/atientInformationSystem.git'
             }
         }
-    stage('Build & Test in Docker') {
-              steps {
-                  script {
-                      docker.image('maven:3.8.7-eclipse-temurin-17').inside {
-                          sh 'mvn clean package'
-                      }
-                  }
-              }
-
-        stage('Deploy') {
-            steps {
-                // Deploy the application (optional)
-                echo 'Deploying the application...'
-                // Add deployment steps here (e.g., copying the JAR to a server)
+stage('Build & Test in Docker') {
+    steps {
+        script {
+            docker.image('maven:3.8.7-eclipse-temurin-17').inside {
+                sh 'mvn clean package'
             }
         }
     }
+}
+
+// ✅ Place Deploy stage outside
+stage('Deploy') {
+    steps {
+        echo 'Deploying the application...'
+    }
+}
 
     post {
         success {
