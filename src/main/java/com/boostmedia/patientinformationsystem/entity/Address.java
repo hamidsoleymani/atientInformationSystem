@@ -3,7 +3,6 @@ package com.boostmedia.patientinformationsystem.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "address", schema = "medical_facility_information_system_schema")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")

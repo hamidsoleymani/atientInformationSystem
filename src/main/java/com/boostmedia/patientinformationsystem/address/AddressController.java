@@ -1,6 +1,7 @@
 package com.boostmedia.patientinformationsystem.address;
 
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class AddressController {
     }
 
     @PostMapping("/create")
-    public AddressDto save(@RequestBody AddressDto dto){
+    public AddressDto save(@Valid @RequestBody AddressDto dto){
        return this.service.save(dto);
     }
 }
