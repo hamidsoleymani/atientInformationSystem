@@ -6,26 +6,21 @@ pipeline {
        }
 
     stages {
+
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub
                 git branch: 'develop', url: 'https://github.com/hamidsoleymani/atientInformationSystem.git'
             }
         }
-
-        stage('Build') {
-            steps {
-                // Build the Spring Boot application using Maven
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                // Run tests
-                sh 'mvn test'
-            }
-        }
+    stage('Build & Test in Docker') {
+              steps {
+                  script {
+                      docker.image('maven:3.8.7-eclipse-temurin-17').inside {
+                          sh 'mvn clean package'
+                      }
+                  }
+              }
 
         stage('Deploy') {
             steps {
