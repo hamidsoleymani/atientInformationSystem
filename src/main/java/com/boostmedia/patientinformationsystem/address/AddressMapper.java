@@ -1,6 +1,5 @@
 package com.boostmedia.patientinformationsystem.address;
 
-import com.boostmedia.patientinformationsystem.entity.Address;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

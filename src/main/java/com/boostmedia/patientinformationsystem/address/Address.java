@@ -1,4 +1,4 @@
-package com.boostmedia.patientinformationsystem.entity;
+package com.boostmedia.patientinformationsystem.address;
 
 import jakarta.persistence.*;
 
@@ -23,16 +23,6 @@ public class Address {
 
     @Column(name = "building_nr", nullable = false, length = 5)
     private String buildingNr;
-
-    private Long medicalFacilityId;
-
-    public Long getMedicalFacilityId() {
-        return medicalFacilityId;
-    }
-
-    public void setMedicalFacilityId(Long medicalFacilityId) {
-        this.medicalFacilityId = medicalFacilityId;
-    }
 
     public Long getId() {
         return id;

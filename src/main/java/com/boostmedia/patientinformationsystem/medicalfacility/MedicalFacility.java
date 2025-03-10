@@ -1,5 +1,6 @@
-package com.boostmedia.patientinformationsystem.entity;
+package com.boostmedia.patientinformationsystem.medicalfacility;
 
+import com.boostmedia.patientinformationsystem.address.Address;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,16 @@ public class MedicalFacility {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
+    @OneToOne
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Long getId() {
         return id;

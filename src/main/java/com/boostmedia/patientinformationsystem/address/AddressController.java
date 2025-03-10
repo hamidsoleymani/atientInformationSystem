@@ -2,10 +2,7 @@ package com.boostmedia.patientinformationsystem.address;
 
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/address")
 @RestController
@@ -18,7 +15,12 @@ public class AddressController {
     }
 
     @PostMapping("/create")
-    public AddressDto save(@Valid @RequestBody AddressDto dto){
-       return this.service.save(dto);
+    public AddressDto save(@Valid @RequestBody AddressDto dto) {
+        return this.service.toDto(this.service.save(dto));
+    }
+
+    @PostMapping("/{id}}")
+    public AddressDto get(@PathVariable Long id) {
+        return this.service.getAddressById(id);
     }
 }

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
- * DTO for {@link com.boostmedia.patientinformationsystem.entity.Address}
+ * DTO for {@link Address}
  */
 public record AddressDto(Long id,
                          String country,
@@ -13,6 +13,5 @@ public record AddressDto(Long id,
                          String street,
                          @NotBlank(message="The zip code must be defined")
                          String zipCode,
-                         String buildingNr,
-                         Long medicalFacilityId) implements Serializable {
+                         String buildingNr) implements Serializable {
 }

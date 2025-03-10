@@ -1,22 +1,30 @@
 package com.boostmedia.patientinformationsystem.medicalfacility;
 
 import com.boostmedia.patientinformationsystem.ResourceNotFoundException;
-import com.boostmedia.patientinformationsystem.entity.MedicalFacility;
+import com.boostmedia.patientinformationsystem.address.Address;
+import com.boostmedia.patientinformationsystem.address.AddressDto;
+import com.boostmedia.patientinformationsystem.address.AddressMapper;
+import com.boostmedia.patientinformationsystem.address.AddressService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MedicalFacilityService {
     private final MedicalFacilityMapper medicalFacilityMapper;
     private final MedicalFacilityRepository repository;
+    private final AddressService addressService;
 
-    public MedicalFacilityService(MedicalFacilityRepository repository,
-                                  MedicalFacilityMapper medicalFacilityMapper) {
-        this.repository = repository;
+    public MedicalFacilityService(MedicalFacilityMapper medicalFacilityMapper,
+                                  MedicalFacilityRepository repository,
+                                  AddressService addressService) {
         this.medicalFacilityMapper = medicalFacilityMapper;
+        this.repository = repository;
+        this.addressService = addressService;
     }
 
     public void save(MedicalFacilityDto dto) {
         MedicalFacility entity = this.medicalFacilityMapper.toEntity(dto);
+        Address address = this.addressService.save(dto.addressDto());
+        entity.setAddress(address);
         this.repository.save(entity);
     }
 
