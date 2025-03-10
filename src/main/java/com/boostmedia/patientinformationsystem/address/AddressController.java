@@ -19,7 +19,7 @@ public class AddressController {
         return this.service.toDto(this.service.save(dto));
     }
 
-    @PostMapping("/{id}}")
+    @GetMapping("/{id}")
     public AddressDto get(@PathVariable Long id) {
         return this.service.getAddressById(id);
     }

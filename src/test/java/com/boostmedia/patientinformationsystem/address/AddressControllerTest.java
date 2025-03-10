@@ -11,6 +11,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -22,14 +23,12 @@ public class AddressControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    // Start a PostgreSQL container
     @Container
-    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
+    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres:15"))
             .withDatabaseName("testdb")
             .withUsername("postgres")
             .withPassword("postgres");
 
-    // Override Spring Boot properties with Testcontainers' database URL
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
@@ -39,26 +38,22 @@ public class AddressControllerTest {
 
     @Test
     void testSaveAndGetAddress() {
-        // Create a new Address
-        AddressDto addressDto = new AddressDto(null, "USA", "New York", "5th Avenue","5th Avenue", "10001");
+        AddressDto addressDto = new AddressDto(null, "USA", "New York", "5th Avenue", "10128", "10001");
 
-        // Save the Address using the POST endpoint
         ResponseEntity<AddressDto> saveResponse = restTemplate.postForEntity("/address/create", addressDto, AddressDto.class);
         assertEquals(HttpStatus.OK, saveResponse.getStatusCode());
         assertNotNull(saveResponse.getBody());
         assertNotNull(saveResponse.getBody().id());
 
-        // Get the saved Address using the GET endpoint
         Long savedAddressId = saveResponse.getBody().id();
         ResponseEntity<AddressDto> getResponse = restTemplate.getForEntity("/address/" + savedAddressId, AddressDto.class);
 
-        // Verify the response
         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
         assertNotNull(getResponse.getBody());
         assertEquals("USA", getResponse.getBody().country());
         assertEquals("New York", getResponse.getBody().city());
         assertEquals("5th Avenue", getResponse.getBody().street());
-        assertEquals("10001", getResponse.getBody().zipCode());
-        assertEquals("123", getResponse.getBody().buildingNr());
+        assertEquals("10128", getResponse.getBody().zipCode());
+        assertEquals("10001", getResponse.getBody().buildingNr());
     }
 }
