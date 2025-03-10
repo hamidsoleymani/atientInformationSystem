@@ -1,35 +1,43 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'my-spring-app'
-        DOCKER_CONTAINER = 'spring_app'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/hamidsoleymani/catalog-service.git'
+                // Checkout the code from GitHub
+                git branch: 'main', url: 'hhttps://github.com/hamidsoleymani/catalog-service.git'
             }
         }
 
-        stage('Build & Test') {
+        stage('Build') {
             steps {
-                sh './mvnw clean package'
+                // Build the Spring Boot application using Maven
+                sh 'mvn clean package'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Test') {
             steps {
-                sh 'docker build -t my-spring-app .'
+                // Run tests
+                sh 'mvn test'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy') {
             steps {
-                sh 'docker stop $DOCKER_CONTAINER || true && docker rm $DOCKER_CONTAINER || true'
-                sh 'docker run -d --name $DOCKER_CONTAINER -p 8080:8080 my-spring-app'
+                // Deploy the application (optional)
+                echo 'Deploying the application...'
+                // Add deployment steps here (e.g., copying the JAR to a server)
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and tests completed successfully!'
+        }
+        failure {
+            echo 'Build or tests failed!'
         }
     }
 }
