@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the code from GitHub
-                git branch: 'main', url: 'hhttps://github.com/hamidsoleymani/catalog-service.git'
+                git branch: 'main', url: 'https://github.com/hamidsoleymani/atientInformationSystem.git'
             }
         }
 
