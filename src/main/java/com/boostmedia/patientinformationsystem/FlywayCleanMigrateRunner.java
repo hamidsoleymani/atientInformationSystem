@@ -16,7 +16,7 @@ public class FlywayCleanMigrateRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        flyway.clean(); // Clean the databasejenkins test5
+        flyway.clean(); // Clean the databasejenkins test6
         flyway.migrate(); // Apply migrations
     }
 }
