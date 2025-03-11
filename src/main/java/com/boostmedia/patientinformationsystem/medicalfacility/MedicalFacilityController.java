@@ -3,7 +3,7 @@ package com.boostmedia.patientinformationsystem.medicalfacility;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/medical-facilities")
+@RequestMapping("/medicalfacilities")
 public class MedicalFacilityController {
 
     private final MedicalFacilityService service;
@@ -15,7 +15,6 @@ public class MedicalFacilityController {
     @PostMapping("/create")
     public void createMedicalFacility(@RequestBody MedicalFacilityDto dto){
         this.service.save(dto);
-
     }
 
     @GetMapping("/by-id/{id}")

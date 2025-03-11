@@ -11,6 +11,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import static com.boostmedia.patientinformationsystem.TestUtilities.addressDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -40,7 +41,6 @@ public class AddressControllerTest {
 
     @Test
     void testSaveAndGetAddress() {
-        AddressDto addressDto = new AddressDto(null, "USA", "New York", "5th Avenue", "10128", "10001");
 
         // Send POST request to save address
         AddressDto savedAddress = webTestClient.post()

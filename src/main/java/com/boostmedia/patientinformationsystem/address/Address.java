@@ -9,19 +9,14 @@ public class Address {
     @SequenceGenerator(name = "address_seq", sequenceName = "address_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "country", nullable = false, length = 20)
     private String country;
 
-    @Column(name = "city", nullable = false, length = 20)
     private String city;
 
-    @Column(name = "street", nullable = false, length = 20)
     private String street;
 
-    @Column(name = "zip_code", nullable = false, length = 10)
     private String zipCode;
 
-    @Column(name = "building_nr", nullable = false, length = 5)
     private String buildingNr;
 
     public Long getId() {
