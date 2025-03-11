@@ -14,7 +14,6 @@ import org.testcontainers.utility.DockerImageName;
 import java.time.Duration;
 
 import static com.boostmedia.patientinformationsystem.TestUtilities.addressDto;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
