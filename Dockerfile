@@ -10,8 +10,5 @@ COPY target/*.jar app.jar
 # Expose the application port (same as in application.properties)
 EXPOSE 8080
 
-COPY entrypoint.sh /entrypoint.sh
-
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
