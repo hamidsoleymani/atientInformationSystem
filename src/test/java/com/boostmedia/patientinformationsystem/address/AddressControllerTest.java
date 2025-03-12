@@ -18,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 //Spring detects that you're testing a web application and sets up WebTestClient to use that running instance.
 //Because @SpringBootTest(RANDOM_PORT) starts the full application including controllers, services, repositories, etc.
 //Spring Boot injects WebTestClient with the correct base URL for the running app.
+//@SpringBootTest → Loads the full Spring Boot context.
+//@Testcontainers → Ensures Testcontainers starts before tests run.
+//@Container → Manages the PostgreSQL container lifecycle.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)//RANDOM_PORT starts the full application on a random port
 @Testcontainers
 public class AddressControllerTest {
