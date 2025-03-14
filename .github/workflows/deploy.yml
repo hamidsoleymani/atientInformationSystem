@@ -1,4 +1,4 @@
-name: Build Spring Boot Application
+name: Build and Test Spring Boot Application
 
 on:
   push:
@@ -6,11 +6,23 @@ on:
       - develop  # Triggers when code is pushed to the 'main' branch
   pull_request:
     branches:
-      - develop  # Triggers when a PR is created for the 'main' branch
+      - develop  # Trigger on PR to main branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # You can also use macOS or Windows if needed
+    runs-on: ubuntu-latest  # You can use macOS or Windows if required
+
+    services:
+      # Start Docker services for Testcontainers, for example, PostgreSQL or any other DB service needed for integration tests
+      postgres:
+        image: postgres:15
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        options: --health-cmd="pg_isready -U postgres" --health-interval=5s --health-timeout=5s --health-retries=3
 
     steps:
       # Checkout the code
@@ -33,19 +45,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Build the project using Maven
+      # Build the project with Maven
       - name: Build with Maven
         run: mvn clean install --no-transfer-progress
 
-      # Optionally, run tests (uncomment if needed)
-      # - name: Run tests
-      #   run: mvn test
+      # Optionally, run tests
+      - name: Run integration tests with Testcontainers
+        run: mvn verify -DskipTests=false
 
-      # Package the Spring Boot application (skip if you don't need this)
+      # Package the Spring Boot application
       - name: Package Spring Boot JAR
         run: mvn package
 
-      # Optionally, upload the JAR to a release (uncomment if needed)
+      # Optionally, upload the JAR to GitHub Releases (uncomment if needed)
       # - name: Upload JAR as GitHub Release
       #   uses: softprops/action-gh-release@v1
       #   with:
