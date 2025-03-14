@@ -1,0 +1,52 @@
+name: Build Spring Boot Application
+
+on:
+  push:
+    branches:
+      - main  # Triggers when code is pushed to the 'main' branch
+  pull_request:
+    branches:
+      - main  # Triggers when a PR is created for the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # You can also use macOS or Windows if needed
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Java (using OpenJDK 17)
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'  # OpenJDK distribution
+          java-version: '21'       # Specify Java version (e.g., 11, 17)
+
+      # Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Build the project using Maven
+      - name: Build with Maven
+        run: mvn clean install --no-transfer-progress
+
+      # Optionally, run tests (uncomment if needed)
+      # - name: Run tests
+      #   run: mvn test
+
+      # Package the Spring Boot application (skip if you don't need this)
+      - name: Package Spring Boot JAR
+        run: mvn package
+
+      # Optionally, upload the JAR to a release (uncomment if needed)
+      # - name: Upload JAR as GitHub Release
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: target/*.jar
