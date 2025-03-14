@@ -3,10 +3,10 @@ name: Build Spring Boot Application
 on:
   push:
     branches:
-      - main  # Triggers when code is pushed to the 'main' branch
+      - develop  # Triggers when code is pushed to the 'main' branch
   pull_request:
     branches:
-      - main  # Triggers when a PR is created for the 'main' branch
+      - develop  # Triggers when a PR is created for the 'main' branch
 
 jobs:
   build:
