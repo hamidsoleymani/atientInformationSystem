@@ -19,3 +19,4 @@ ls -l /var/run/docker.sock
 lrwxr-xr-x@ 1 root  daemon  45 Mar 15 22:57 /var/run/docker.sock -> /Users/hamidsoleymani/.docker/run/docker.sock
 hamidsoleymani@iMac ~ % 
 
+after this it helped: sudo chmod 777 /var/run/docker.sock
