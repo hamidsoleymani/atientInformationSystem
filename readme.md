@@ -14,3 +14,8 @@ Restart the Jenkins service: brew services restart jenkins-lts
 Update the Jenkins version: brew upgrade jenkins-lts
 
 jenkins_adminpegasus
+
+ls -l /var/run/docker.sock
+lrwxr-xr-x@ 1 root  daemon  45 Mar 15 22:57 /var/run/docker.sock -> /Users/hamidsoleymani/.docker/run/docker.sock
+hamidsoleymani@iMac ~ % 
+
