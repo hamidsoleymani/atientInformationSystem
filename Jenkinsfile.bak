@@ -1,39 +1,41 @@
 pipeline {
-    agent {
-        docker { image 'maven:3.8.7-eclipse-temurin-17' }  // ✅ Use a valid Maven image
+    agent any
+    environment {
+        DOCKER_HOST = "unix:///var/run/docker.sock"
     }
-
     stages {
-        stage('Checkout') {
+        stage('checkout') {
             steps {
                 git branch: 'develop', url: 'https://github.com/hamidsoleymani/atientInformationSystem.git'
             }
         }
-
-        stage('Build & Test in Docker') {
+        stage('build') {
             steps {
-                script {
-                    docker.image('maven:3.8.7-eclipse-temurin-17').inside {
-                        sh 'mvn clean package'
-                    }
-                }
+                sh 'chmod +x ./mvnw'  // Make mvnw executable
+                sh './mvnw clean install -DskipTest'  // -DskipTests Ensure mvnw is executable OR use 'mvn clean install'
+            }
+        }
+        stage('capture') {
+            steps {
+                archiveArtifacts '**/target/*.jar'  // Archive built JAR files from the target directory
+                junit '**/target/surefire-reports/*.xml'  // Archive JUnit test results
+                jacoco(execPattern: '**/target/jacoco.exec') // Configure JaCoCo for code coverage
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the application...'
-                // Add deployment steps here
-            }
-        }
     }
-
     post {
+        always {
+            cleanWs() // Clean up workspace
+        }
         success {
-            echo 'Build and tests completed successfully!'
+            echo 'Build successful!'
+        }
+        unstable {
+            echo 'Build unstable.'
         }
         failure {
-            echo 'Build or tests failed!'
+            echo 'Build failed!'
         }
     }
 }
